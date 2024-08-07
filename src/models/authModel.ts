@@ -1,6 +1,6 @@
 // 用户登录请求参数模型
 export interface AuthRequestModel {
-    username: string;
+    loginName: string;
     password: string;
 }
 
@@ -15,7 +15,7 @@ export interface AuthModel {
  */
 export interface UserInfoModel {
     userId: string;
-    userName: string;
+    username: string;
     dashboard: string;
     role: string[];
 };

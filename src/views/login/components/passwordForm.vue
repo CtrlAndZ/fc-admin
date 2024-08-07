@@ -71,7 +71,7 @@ const rules = reactive<FormRules<FormData>>({
 })
 const loginForm = ref<FormInstance>()
 
-// 使用 watch 函数来观察 userType 的变化  
+// 使用 watch 函数来观察 userType 的变化
 watch(userType, (newVal) => {
     if (newVal === 'admin') {
         form.user = 'admin';
@@ -84,23 +84,23 @@ watch(userType, (newVal) => {
 
 const login = async (formEl: FormInstance | undefined) => {
     if (!formEl) return
-    // 验证表单 
+    // 验证表单
     await formEl.validate(async (valid) => {
         if (!valid) return
         islogin.value = true;
-        // 准备请求数据  
+        // 准备请求数据
         const data = {
-            username: form.user,
+            loginName: form.user,
             password: encryptionTool.MD5(form.password)
         };
 
         try {
-            // 获取 token  
+            // 获取 token
             const authData = await loginApi(data);
             authStore.token = authData.data.token
             authStore.userInfo = authData.data.userInfo
 
-            // 获取菜单  
+            // 获取菜单
             let menuData = await getMenuApi();
             if (menuData.data.menu.length === 0) {
                 islogin.value = false;

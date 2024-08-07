@@ -7,7 +7,7 @@ export const useAuthStore = defineStore('authStore', {
         token: "",
         userInfo: {
             userId: "",
-            userName: "",
+            username: "",
             dashboard: "",
             role: [],
         } as UserInfoModel

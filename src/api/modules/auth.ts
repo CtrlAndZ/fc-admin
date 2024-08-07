@@ -3,7 +3,7 @@ import { AuthRequestModel, AuthModel, MenuPermissionsModel } from "@/models/auth
 
 // 用户登录
 export const loginApi = (params: AuthRequestModel) => {
-    return http.post<AuthModel>('/v1/token', params);
+    return http.post<AuthModel>('/sys/user/login', params);
 };
 
 // 获取菜单列表及权限
