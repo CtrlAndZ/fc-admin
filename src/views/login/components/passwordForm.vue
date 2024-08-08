@@ -43,6 +43,7 @@ import encryptionTool from '@/utils/encryption'
 import { loginApi, getMenuApi } from '@/api/modules/auth'
 import { useAuthStore } from "@/store/modules/auth";
 import { useMenuStore } from "@/store/modules/menu";
+import { MenuModel } from "@/models/authModel";
 
 interface FormData {
     user: string;
@@ -102,14 +103,14 @@ const login = async (formEl: FormInstance | undefined) => {
 
             // 获取菜单
             let menuData = await getMenuApi();
-            if (menuData.data.menu.length === 0) {
+            if (menuData.data.length === 0) {
                 islogin.value = false;
                 alert("当前用户无任何菜单权限，请联系系统管理员")
                 return
             }
-            menuStore.list = menuData.data.menu
-            menuStore.permissions = menuData.data.permissions
-
+            for (const menu of menuData.data){
+              menuStore.list.push(toMenu(menu, menuStore.permissions))
+            }
             router.replace({ path: '/' });
             ElMessage.success("Login Success 登录成功");
             islogin.value = false;
@@ -118,6 +119,35 @@ const login = async (formEl: FormInstance | undefined) => {
         }
     })
 }
+
+const toMenu = (menuData: MenuModel, permissions: string[]): Menu.MenuOptions => {
+  var children: Menu.MenuOptions[] = []
+  if (menuData.children && menuData.children.length > 0){
+    children = menuData.children.map(c => toMenu(c, permissions))
+  }
+  const menu: Menu.MenuOptions = {
+    path: menuData.path,
+    name: menuData.name,
+    redirect: menuData.redirect,
+    component: menuData.component,
+    meta: {
+      icon: menuData.icon,
+      title: menuData.title,
+      active: menuData.active,
+      isHide: menuData.isHide,
+      isFull: menuData.isFull,
+      isAffix: menuData.isAffix,
+      isKeepAlive: menuData.isKeepAlive,
+      tag: menuData.tag
+    },
+    children: children
+  }
+  if (menuData.perms){
+    permissions.push(menuData.perms)
+  }
+  return menu;
+}
+
 </script>
 
 <style></style>

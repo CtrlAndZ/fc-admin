@@ -1,5 +1,5 @@
 import http from "@/api";
-import { AuthRequestModel, AuthModel, MenuPermissionsModel } from "@/models/authModel";
+import {AuthRequestModel, AuthModel, MenuModel} from "@/models/authModel";
 
 // 用户登录
 export const loginApi = (params: AuthRequestModel) => {
@@ -8,7 +8,7 @@ export const loginApi = (params: AuthRequestModel) => {
 
 // 获取菜单列表及权限
 export const getMenuApi = () => {
-    return http.get<MenuPermissionsModel>('/v1/menu');
+    return http.get<MenuModel[]>('/sys/menu/tree');
 };
 
 // 获取字符验证码

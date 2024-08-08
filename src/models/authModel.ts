@@ -28,6 +28,28 @@ export interface MenuPermissionsModel {
     permissions: string[];
 }
 
+export interface MenuModel {
+    id: number,
+    parentId: number,
+    name: string,
+    redirect?: string,
+    component?: string,
+    icon?: string,
+    sort?: number,
+    title: string,
+    target?: string,
+    active?: string,
+    type?: string,
+    path: string,
+    isHide?: boolean,
+    isFull?: boolean,
+    isAffix?: boolean,
+    isKeepAlive?: boolean,
+    tag?: string,
+    perms?: string,
+    children?: MenuModel[]
+}
+
 /**
  * 任务模型
  */
